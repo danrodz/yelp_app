@@ -28,7 +28,7 @@ def display_restaurants(location, term)
     show_message("#{i} - #{h[:name]} - Rating: #{h[:rating]}")
   end
 
-  list.map { |restaurant| Restaurant.create(restaurant) }
+  list.map { |restaurant| Restaurant.find_or_create_by(restaurant) }
 
   show_message('Please choose the number of the restaurant you will like to view.')
   index = take_integer
@@ -46,11 +46,11 @@ def display_menu(yelp_id)
   review_info = parse_reviews_and_customers(yelp_id)
 
   review_info.each do |hash|
-    user_id = Customer.create(hash[:user]).id
+    user_id = Customer.find_or_create_by(hash[:user]).id
     restaurant_id = new_restaurant.id
     rating = hash[:rating]
     text = hash[:text]
-    Review.create({rating: rating, text: text, customer_id: user_id, restaurant_id: restaurant_id})
+    Review.find_or_create_by({rating: rating, text: text, customer_id: user_id, restaurant_id: restaurant_id})
   end
 
   show_message('menu')
@@ -66,25 +66,27 @@ end
 
 def run_query(selection:, restaurant_id:)
   restaurant = Restaurant.find_by(id: restaurant_id)
-  case selection
+  case 
   when selection == 1
-    p restaurant.address
+    show_message("This restaurant is located at : #{restaurant.address}")
   when selection == 2
     restaurant.reviews.each do |review|
-      puts
+      puts ''
       puts "Rating: #{review.rating}"
-      puts "Comment: #{review.text}" 
+      puts "Comment: #{review.text}"
       puts "Customer: #{review.customer.name}"
-      puts
+      puts ''
     end
   when selection == 3
-    p restaurant.rating
+    show_message("Restaurant Rating: #{restaurant.rating}")
   when selection == 4
-    p restaurant.categories
+    show_message("This Restaurant's Categories are: #{restaurant.categories}")
   when selection == 5
-    p restaurant.image_url
+    show_message(restaurant.image_url)
   else
-    restaurant.customers.each.with_index(1) { |c, i| puts "#{i} - Customer: #{c.name}" }
+    show_message('')
+    restaurant.customers.each.with_index(1) { |c, i| puts "#{i} - #{c.name}" }
+    show_message('')
   end
 end
 
@@ -116,56 +118,58 @@ def get_menu_and_query(yelp_id)
   run_query(selection_and_restaurant_id)
 end
 
-initialized = true
-location_and_term = nil
-yelp_id = nil
-in_welcome = true
-in_menu_and_query = false
-in_additional_query = false
+def run
+  initialized = true
+  location_and_term = nil
+  yelp_id = nil
+  in_welcome = true
+  in_menu_and_query = false
+  in_additional_query = false
 
-while initialized
-  in_location = false
-  in_restaurants = false
-  in_exit_message = false
+  while initialized
+    in_location = false
+    in_restaurants = false
+    in_exit_message = false
 
-  while in_welcome
-    welcome
-    in_welcome = false
-    in_location = true
-  end
+    while in_welcome
+      welcome
+      in_welcome = false
+      in_location = true
+    end
 
-  while in_location
-    location_and_term = get_location_and_term
-    in_location = false if location_and_term
-    in_restaurants = true
-  end
+    while in_location
+      location_and_term = get_location_and_term
+      in_location = false if location_and_term
+      in_restaurants = true
+    end
 
-  while in_restaurants
-    yelp_id = fetch_restaurants(location_and_term)
-    in_restaurants = false if yelp_id
-    in_menu_and_query = true
-  end
-
-  while in_menu_and_query
-    get_menu_and_query(yelp_id)
-    in_additional_query = true
-    in_menu_and_query = false
-  end
-
-  while in_additional_query
-    show_message('Would you like to see something else about this restaurant? (Yes, No)')
-    additional_query = take_string
-    if additional_query == 'no'
-      in_exit_message = true
-    else
+    while in_restaurants
+      yelp_id = fetch_restaurants(location_and_term)
+      in_restaurants = false if yelp_id
       in_menu_and_query = true
     end
-    in_additional_query = false
-  end
 
-  while in_exit_message
-    show_message('Until next time!')
-    in_exit_message = false
-    initialized = false
+    while in_menu_and_query
+      get_menu_and_query(yelp_id)
+      in_additional_query = true
+      in_menu_and_query = false
+    end
+
+    while in_additional_query
+      show_message('Would you like to see something else about this restaurant? (Yes, No)')
+      additional_query = take_string
+      if additional_query == 'no'
+        in_exit_message = true
+      else
+        in_menu_and_query = true
+      end
+      in_additional_query = false
+    end
+
+    while in_exit_message
+      show_message('Until next time!')
+      in_exit_message = false
+      initialized = false
+    end
   end
 end
