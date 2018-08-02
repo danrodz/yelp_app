@@ -24,9 +24,9 @@ bundle install
 
 And then execute:
 
-    ```Ruby
-    rake db:migrate
-    ```
+```Ruby
+rake db:migrate
+```
 
 to create your personal database with the information retrieved.
 
