@@ -1,4 +1,6 @@
 class Review < ActiveRecord::Base
+  belong_to :customer
+  belong_to :restaurant
   # attr_reader :rating, :text, :customer_id, :business_id, :yelp_id
 
   # def initialize(info)

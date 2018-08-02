@@ -11,4 +11,4 @@ require_relative '../setup.rb'
 #
 # run
 
-welcome
+binding.pry
