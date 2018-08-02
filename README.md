@@ -2,7 +2,7 @@
 
 ## Sample Usage
 
-![Display Results](https://ibb.co/mzkG1K)
+[Display Results](sample_use_images/display_results.png 'Displaying Query Results -Sample')
 
 Welcome to your new app! In this directory, you'll find the instructions you need to be able to run this app in your terminal.
 
