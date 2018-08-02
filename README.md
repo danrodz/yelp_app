@@ -48,7 +48,7 @@ After inserting your `binding.pry` run `ruby tools/runner.rb` from your terminal
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/danrodz/yelp_app. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at [repo_link](https://github.com/danrodz/yelp_app). This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
