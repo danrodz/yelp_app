@@ -14,7 +14,7 @@ end
 
 def get_restaurants(location, search_term = nil)
   search_term ? additional_search_term = "+#{search_term}" : additional_search_term = ""
-  url = "https://api.yelp.com/v3/businesses/search?term=restaurants#{additional_search_term}&location=#{location}x&limit=2"
+  url = "https://api.yelp.com/v3/businesses/search?term=restaurants#{additional_search_term}&location=#{location}x&limit=10"
   make_api_call(url)
 end
 

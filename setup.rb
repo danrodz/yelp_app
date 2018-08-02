@@ -58,33 +58,33 @@ def display_menu(yelp_id)
   show_message('2 - Reviews')
   show_message('3 - Rating')
   show_message('4 - Categories')
-  show_message('5 - Images')
+  show_message('5 - Images Urls')
   show_message('6 - customers')
   selection = take_integer
   { selection: selection, restaurant_id: new_restaurant.id }
 end
 
 def run_query(selection:, restaurant_id:)
-  case
+  restaurant = Restaurant.find_by(id: restaurant_id)
+  case selection
   when selection == 1
-    # tentative for address
-    p Restaurant.find_by(restaurant_id: restaurant_id).address
+    p restaurant.address
   when selection == 2
-    # tentative for reviews
-    p Review.all.select { |review| review.restaurant_id == restaurant_id }
+    restaurant.reviews.each do |review|
+      puts
+      puts "Rating: #{review.rating}"
+      puts "Comment: #{review.text}" 
+      puts "Customer: #{review.customer.name}"
+      puts
+    end
   when selection == 3
-    # tentative for rating?
-    p Restaurant.find_by(restaurant_id: restaurant_id).rating
+    p restaurant.rating
   when selection == 4
-    # tentative for categories?
-    p Restaurant.find_by(restaurant_id: restaurant_id).categories
+    p restaurant.categories
   when selection == 5
-    # tentative for images?
-    p Restaurant.find_by(restaurant_id: restaurant_id).images
+    p restaurant.image_url
   else
-    binding.pry
-    p Review.all.map { |review| review.customer if review.restaurant_id == new_restaurant }.compact!
-    # tentative for customers?
+    restaurant.customers.each.with_index(1) { |c, i| puts "#{i} - Customer: #{c.name}" }
   end
 end
 
@@ -103,7 +103,6 @@ def get_location_and_term
   show_message('Would you like to search for a specific item / cuisine / term / etc ? (Yes / N)')
   yes_or_no = take_string
   term = provided_term(yes_or_no)
-  # returns the location and additional searching term
   { location: location, term: term }
 end
 
@@ -118,30 +117,33 @@ def get_menu_and_query(yelp_id)
 end
 
 initialized = true
+location_and_term = nil
+yelp_id = nil
+in_welcome = true
+in_menu_and_query = false
+in_additional_query = false
 
 while initialized
-  in_welcome = true
-  in_location = true
-  in_restaurants = true
-  in_menu_and_query = true
-  in_additional_query = false
+  in_location = false
+  in_restaurants = false
   in_exit_message = false
-  location_and_term = nil
-  yelp_id = nil
 
   while in_welcome
     welcome
     in_welcome = false
+    in_location = true
   end
 
   while in_location
     location_and_term = get_location_and_term
     in_location = false if location_and_term
+    in_restaurants = true
   end
 
   while in_restaurants
     yelp_id = fetch_restaurants(location_and_term)
     in_restaurants = false if yelp_id
+    in_menu_and_query = true
   end
 
   while in_menu_and_query
@@ -153,13 +155,12 @@ while initialized
   while in_additional_query
     show_message('Would you like to see something else about this restaurant? (Yes, No)')
     additional_query = take_string
-    in_additional_query = false
-
-    if additional_query.downcase == 'no'
+    if additional_query == 'no'
       in_exit_message = true
     else
       in_menu_and_query = true
     end
+    in_additional_query = false
   end
 
   while in_exit_message
