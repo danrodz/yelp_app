@@ -18,7 +18,7 @@ To experiment with that code, simply run `ruby tools/run.rb` to launch the inter
 
 cd into your project's location within your terminal and run:
 
-```ruby
+```Ruby
 bundle install
 ```
 
