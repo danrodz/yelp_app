@@ -2,8 +2,6 @@
 
 ## Sample Usage
 
-![Display Results](sample_use_images/display_results.png 'Displaying Query Results -Sample')
-
 Welcome to your new app! In this directory, you'll find the instructions you need to be able to run this app in your terminal.
 
 First run `bundle install` to download all necessary gems for this project.
@@ -11,6 +9,8 @@ First run `bundle install` to download all necessary gems for this project.
 You will also need to obtain an API Key from [Yelp](https://www.yelp.com/developers/v3/manage_app) and insert it into your code in the file `info.rb` file.
 
 To experiment with that code, simply run `ruby tools/run.rb` to launch the interactive interface that allows you start browsing through the Yelp API.
+
+![Display Results](sample_use_images/display_results.png 'Displaying Query Results -Sample')
 
 ---
 
