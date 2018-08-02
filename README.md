@@ -24,7 +24,7 @@ bundle install
 
 And then execute:
 
-    ```ruby
+    ```Ruby
     rake db:migrate
     ```
 
