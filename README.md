@@ -39,7 +39,9 @@ This additional search term can be anything, such as a cuisine, type of establis
 
 ---
 
-## ![Menu](sample_use_images/display_menu.png 'Displaying Menu -Sample')
+## Sample Use
+
+![Menu](sample_use_images/display_menu.png 'Displaying Menu -Sample')
 
 ![Reviews](sample_use_images/display_reviews.png 'Displaying Review Results -Sample')
 
