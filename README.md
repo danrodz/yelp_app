@@ -37,6 +37,12 @@ to create your personal database with the information retrieved.
 The Restaurants @Yelp CLI App allows users to quickly interact and request information from the Yelp API. Users are able to request a list of restaurants by providing a required location and an optional parameter search for the type of restaurant in consideration.
 This additional search term can be anything, such as a cuisine, type of establishment, open availability, or even menu items.
 
+---
+
+## ![Menu](sample_use_images/display_menu.png 'Displaying Menu -Sample')
+
+![Reviews](sample_use_images/display_reviews.png 'Displaying Review Results -Sample')
+
 ## Development
 
 After checking out the repo, run `rake db:migrate` to create your database.
