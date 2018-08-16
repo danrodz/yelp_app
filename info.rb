@@ -5,7 +5,7 @@ require 'pry'
 def make_api_call(url)
   authorization_hash = {
     content_type: "application/json;charset=utf-8",
-    authorization: "Bearer wN8RA0HKtqL58h7bBAP3-4K3UeZyceVHOB1AvTkvZ-s3bS-qBBCkv4nAyW0hrvhPJ0JQqd2QHOjo1ShuZfNDnCBzvuTsFAN3xppAclXNVS-rLxoQClnM3NmzSspgW3Yx"
+    authorization: "Bearer API_KEY"
   }
   response = RestClient.get url, headers = authorization_hash
 
